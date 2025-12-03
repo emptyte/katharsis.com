@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --font-main: "Plus Jakarta Display", Helvetica, Arial, sans-serif;
+  --font-special: "Roobert", sans-serif;
+
+  --color-theme-light-purple: rgb(170, 152, 255);
+  --color-theme-graphite-gray: rgb(22, 22, 22);
+}
+
+@theme inline {
+  --font-main: var(--font-main);
+  --font-special: var(--font-special);
+
+  --color-theme-light-purple: var(--color-theme-light-purple);
+  --color-theme-graphite-gray: var(--color-theme-graphite-gray);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    background: var(--color-theme-graphite-gray);
+    font-family: var(--font-main);
+  }
+}
+
+@font-face {
+  font-family: "Plus Jakarta Display";
+  src: url("/fonts/PlusJakartaDisplay-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Display";
+  src: url("/fonts/PlusJakartaDisplay-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Display";
+  src: url("/fonts/PlusJakartaDisplay-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roobert";
+  src: url("/fonts/Roobert Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  background: var(--color-theme-graphite-gray);
+  color: white;
+  font-family: var(--font-main);
+}
