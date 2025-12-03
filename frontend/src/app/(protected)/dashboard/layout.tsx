@@ -1,5 +1,4 @@
 import Sidebar from "./components/navigation/sidebar/sidebar";
-
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,12 +12,14 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="relative flex min-h-screen py-4 px-4">
-      <aside className="relative">
+    <section className="flex h-screen w-full overflow-hidden">
+      <aside className="h-full shrink-0 p-4">
         <Sidebar />
       </aside>
 
-      <main className="relative px-4">{children}</main>
+      <main className="flex-1 h-full overflow-y-auto p-4 rounded-tl-2xl">
+        {children}
+      </main>
     </section>
   );
 }
