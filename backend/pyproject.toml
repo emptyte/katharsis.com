@@ -3,13 +3,14 @@ name = "backend_service"
 version = "0.0.1"
 description = "A simple yet powerful inventory management solution designed for small businesses. Streamline stock tracking, reduce costs, and improve productivity with an efficient and easy-to-use system."
 readme = "README.md"
-requires-python = ">=3.13, <4.0"
+requires-python = ">=3.14, <4.0"
 license = { file = "LICENSE" }
 authors = [
     { name = "srvenient", email = "srvenient@gmail.com" }
 ]
 dependencies = [
     "fastapi[standard]>=0.123.9",
+    "pydantic-settings>=2.12.0",
 ]
 
 [tool.uv]
