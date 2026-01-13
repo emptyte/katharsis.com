@@ -1,46 +1,31 @@
-FROM python:3.14-slim
+# --------------------------------------------------------
+# 1. Base Stage: Configuración común (JDK y Archivos)
+# --------------------------------------------------------
+FROM eclipse-temurin:21-jdk-jammy AS base
+WORKDIR /backend
+COPY . .
+RUN chmod +x ./gradlew
 
-# Set environment variables
-ENV PYTHONUNBUFFERED 1
+# --------------------------------------------------------
+# 2. Development Stage: Se usa para programar (Hot Reload)
+# --------------------------------------------------------
+FROM base AS development
+# Ejecutamos bootRun en lugar de construir el JAR
+# --no-daemon ayuda a mantener la memoria estable en Docker
+CMD ["./gradlew", "bootRun", "--no-daemon"]
 
-# Set working directory
-WORKDIR /app/
 
-# Install uv
-# Reference: https://docs.astral.sh/uv/guides/integration/docker/#installing-uv
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+# --------------------------------------------------------
+# 3. Builder Stage: Se usa solo para compilar a Producción
+# --------------------------------------------------------
+FROM base AS builder
+RUN ./gradlew :app:bootJar --no-daemon
 
-# Place executables in the environment at the front of the path
-# Ref: https://docs.astral.sh/uv/guides/integration/docker/#using-the-environment
-ENV PATH="/app/.venv/bin:$PATH"
-
-# Compile bytecode
-# Ref: https://docs.astral.sh/uv/guides/integration/docker/#compiling-bytecode
-ENV UV_COMPILE_BYTECODE=1
-
-# uv Cache
-# Ref: https://docs.astral.sh/uv/guides/integration/docker/#caching
-ENV UV_LINK_MODE=copy
-
-# Install dependencies
-# Ref: https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
-RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-install-project
-
-ENV PYTHONPATH=/app
-
-COPY ./scripts ./app/scripts
-
-COPY ./pyproject.toml ./uv.lock /app/
-
-COPY ./app /app/app
-COPY ./tests /app/tests
-
-# Sync the project
-# Ref: https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync
-
-CMD ["fastapi", "run", "--workers", "4", "app/main.py"]
+# --------------------------------------------------------
+# 4. Production Stage: La imagen final optimizada (JRE)
+# --------------------------------------------------------
+FROM eclipse-temurin:21-jre-jammy AS production
+WORKDIR /app
+COPY --from=builder /backend/app/build/libs/app.jar /app/app.jar
+EXPOSE 8080
+CMD ["java", "-jar", "/app/app.jar"]

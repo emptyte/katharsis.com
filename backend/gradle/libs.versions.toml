@@ -1,0 +1,30 @@
+[versions]
+spring-boot = "4.0.1"
+spring-dependencymanagement = "1.1.7"
+
+[libraries]
+lombok = { group = "org.projectlombok", name = "lombok" }
+
+postgresql = { group = "org.postgresql", name = "postgresql" }
+flyway-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql" }
+
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
+spring-boot-starter-flyway = { group = "org.springframework.boot", name = "spring-boot-starter-flyway" }
+spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security" }
+spring-boot-starter-oauth2-client = { group = "org.springframework.boot", name = "spring-boot-starter-security-oauth2-client" }
+spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation" }
+spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools" }
+
+[bundles]
+spring-boot-starter = ["spring-boot-starter-web", "spring-boot-starter-data-jpa", "spring-boot-starter-validation"]
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependencymanagement = { id = "io.spring.dependency-management", version.ref = "spring-dependencymanagement" }
+
+# Plugins defined by this project.
+katharsis-jvm-library = { id = "katharsis.jvm.library" }
+katharsis-spring-base = { id = "katharsis.spring.base" }
+katharsis-spring-library = { id = "katharsis.spring.library" }
+katharsis-spring-application = { id = "katharsis.spring.application" }

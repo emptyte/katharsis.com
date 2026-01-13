@@ -1,8 +1,7 @@
-# Python
-__pycache__
-app.egg-info
-*.pyc
-.mypy_cache
-.coverage
-htmlcov
-.venv
+.gradle
+.idea
+build
+**/build
+out
+*.log
+!gradle-wrapper.jar
