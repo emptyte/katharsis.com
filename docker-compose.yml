@@ -1,0 +1,59 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: '${PROJECT_NAME?Variable not set}-db'
+    restart: always
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=${POSTGRES_DB?Variable not set}
+      - POSTGRES_USER=${POSTGRES_USER?Variable not set}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - katharsis-net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+
+  backend:
+    container_name: '${PROJECT_NAME?Variable not set}-backend'
+    build:
+      context: ./backend
+      target: development
+    ports:
+      - '8080:8080'
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO}
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT}
+    networks:
+      - katharsis-net
+    develop:
+      watch:
+        - path: ./backend
+          target: /backend
+          action: sync+restart
+          ignore:
+            - build
+            - .gradle
+            - .idea
+            - build.gradle.kts
+
+volumes:
+  postgres_data:
+
+networks:
+  katharsis-net:
+    driver: bridge
