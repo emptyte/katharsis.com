@@ -15,11 +15,19 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "backend"
+rootProject.name = "katharsis"
 
 sequenceOf(
   "app",
   "core",
 ).forEach {
-  include(":$it")
+  include(":${rootProject.name}-$it")
+  project(":${rootProject.name}-$it").projectDir = file(it)
+}
+
+sequenceOf(
+  "api"
+).forEach {
+  include(":${rootProject.name}-infrastructure-$it")
+  project(":${rootProject.name}-infrastructure-$it").projectDir = file("infrastructure/$it")
 }
