@@ -11,7 +11,7 @@ class SpringApplicationConventionPlugin : Plugin<Project> {
       apply(plugin = "org.springframework.boot")
 
       dependencies {
-        "implementation"(project(":core"))
+        "implementation"(project(":katharsis-core"))
 
         "runtimeOnly"(libs.findLibrary("postgresql").get())
 
