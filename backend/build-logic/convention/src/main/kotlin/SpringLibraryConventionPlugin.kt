@@ -11,6 +11,11 @@ class SpringLibraryConventionPlugin : Plugin<Project> {
 
       dependencies {
         "api"(libs.findBundle("spring.boot.starter").get())
+
+        "compileOnly"(libs.findLibrary("lombok").get())
+        "compileOnly"(libs.findLibrary("mapstruct").get())
+        "annotationProcessor"(libs.findLibrary("lombok").get())
+        "annotationProcessor"(libs.findLibrary("mapstruct-processor").get())
       }
     }
   }
