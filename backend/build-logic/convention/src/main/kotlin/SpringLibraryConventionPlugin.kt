@@ -1,7 +1,6 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
 class SpringLibraryConventionPlugin : Plugin<Project> {
@@ -11,11 +10,6 @@ class SpringLibraryConventionPlugin : Plugin<Project> {
 
       dependencies {
         "api"(libs.findBundle("spring.boot.starter").get())
-
-        "compileOnly"(libs.findLibrary("lombok").get())
-        "compileOnly"(libs.findLibrary("mapstruct").get())
-        "annotationProcessor"(libs.findLibrary("lombok").get())
-        "annotationProcessor"(libs.findLibrary("mapstruct-processor").get())
       }
     }
   }
