@@ -1,4 +1,6 @@
 [versions]
+mapstruct = "1.6.3"
+
 spring-boot = "4.0.1"
 spring-dependencymanagement = "1.1.7"
 
@@ -8,8 +10,8 @@ lombok = { group = "org.projectlombok", name = "lombok" }
 postgresql = { group = "org.postgresql", name = "postgresql" }
 flyway-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql" }
 
-mapstruct = { group = "org.mapstruct", name = "mapstruct" }
-mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor" }
+mapstruct = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct" }
 
 spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
 spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
