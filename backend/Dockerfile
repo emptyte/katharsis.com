@@ -9,7 +9,7 @@ RUN chmod +x ./gradlew
 
 
 # Development stage with JDK to run the application with hot reload
-FROM base AS development
+FROM base AS dev
 
 # We run bootRun instead of building the JAR
 # --no-daemon helps keep memory stable in Docker
