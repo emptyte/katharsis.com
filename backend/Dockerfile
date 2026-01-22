@@ -1,5 +1,6 @@
 # Base image with JDK
 FROM eclipse-temurin:21-jdk-jammy AS base
+
 # Set the working directory inside the container
 WORKDIR /backend
 COPY . .
@@ -17,6 +18,7 @@ CMD ["./gradlew", "bootRun", "--no-daemon"]
 
 # Build stage to create the executable JAR
 FROM base AS builder
+
 # We build the JAR file
 RUN ./gradlew :app:bootJar --no-daemon
 
