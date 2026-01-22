@@ -4,21 +4,33 @@
   --font-main: "Plus Jakarta Display", Helvetica, Arial, sans-serif;
   --font-special: "Roobert", sans-serif;
 
-  --color-theme-light-purple: rgb(170, 152, 255);
-  --color-theme-graphite-gray: rgb(22, 22, 22);
+  --color-theme-obsidian: #161616;
+  --color-theme-charcoal: #262626;
+  --color-theme-iron: #404040;
+  --color-theme-mist: #525252;
+  --color-theme-electric-blue: #3B82F6;
+  --color-theme-emerald: #34D399;
+  --color-theme-amber: #FBBF24;
+  --color-theme-red: #F87171;
 }
 
 @theme inline {
   --font-main: var(--font-main);
   --font-special: var(--font-special);
 
-  --color-theme-light-purple: var(--color-theme-light-purple);
-  --color-theme-graphite-gray: var(--color-theme-graphite-gray);
+  --color-theme-obsidian: var(--color-theme-obsidian);
+  --color-theme-charcoal: var(--color-theme-charcoal);
+  --color-theme-iron: var(--color-theme-iron);
+  --color-theme-mist: var(--color-theme-mist);
+  --color-theme-electric-blue: var(--color-theme-electric-blue);
+  --color-theme-emerald: var(--color-theme-emerald);
+  --color-theme-amber: var(--color-theme-amber);
+  --color-theme-red: var(--color-theme-red);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    background: var(--color-theme-graphite-gray);
+    background: var(--color-theme-gunmetal);
     font-family: var(--font-main);
   }
 }
@@ -56,7 +68,7 @@
 }
 
 body {
-  background: var(--color-theme-graphite-gray);
-  color: white;
+  background: var(--color-theme-obsidian);
+  color: var(--color-theme-mist);
   font-family: var(--font-main);
 }
