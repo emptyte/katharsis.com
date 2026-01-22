@@ -13,6 +13,7 @@ class SpringApplicationConventionPlugin : Plugin<Project> {
       dependencies {
         "implementation"(project(":katharsis-core"))
 
+        "implementation"(libs.findLibrary("spring.docs.openapi.ui").get())
         "implementation"(libs.findLibrary("spring.boot.starter.flyway").get())
         "implementation"(libs.findLibrary("flyway.postgresql").get())
 
