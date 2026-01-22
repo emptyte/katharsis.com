@@ -1,14 +1,12 @@
 package team.emptyte.katharsis.catalog.domain.category.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Table(name = "category")
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
