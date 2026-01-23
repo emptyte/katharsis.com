@@ -8,6 +8,7 @@ import team.emptyte.katharsis.catalog.category.application.mapper.CategoryMapper
 import team.emptyte.katharsis.catalog.domain.category.domain.CategoryAggregateRoot;
 import team.emptyte.katharsis.catalog.domain.category.domain.CategoryAggregateRootRepository;
 
+import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -19,6 +20,15 @@ public final class CategoryService {
   public CompletableFuture<CategoryView> findById(final Long id) {
     return this.categoryAggregateRootRepository.findAsync(id)
       .thenApply(this.categoryMapper::toView);
+  }
+
+  public CompletableFuture<Collection<CategoryView>> findAll() {
+    return this.categoryAggregateRootRepository.findAllAsync()
+      .thenApply(collection ->
+        collection.stream()
+          .map(this.categoryMapper::toView)
+          .toList()
+      );
   }
 
   public CompletableFuture<Void> create(final CategoryCommand categoryCommand) {
