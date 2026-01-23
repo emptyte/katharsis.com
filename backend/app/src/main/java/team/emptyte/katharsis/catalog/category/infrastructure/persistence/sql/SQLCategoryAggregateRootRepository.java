@@ -7,6 +7,7 @@ import team.emptyte.katharsis.catalog.category.infrastructure.persistence.sql.jp
 import team.emptyte.katharsis.catalog.domain.category.domain.CategoryAggregateRoot;
 import team.emptyte.katharsis.catalog.domain.category.domain.CategoryAggregateRootRepository;
 
+import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -21,6 +22,11 @@ public class SQLCategoryAggregateRootRepository implements CategoryAggregateRoot
   @Override
   public CompletableFuture<CategoryAggregateRoot> findAsync(final Long id) {
     return CompletableFuture.supplyAsync(() -> this.persistence.findById(id).orElse(null), this.executor);
+  }
+
+  @Override
+  public CompletableFuture<Collection<CategoryAggregateRoot>> findAllAsync() {
+    return CompletableFuture.supplyAsync(this.persistence::findAll, this.executor);
   }
 
   @Override
