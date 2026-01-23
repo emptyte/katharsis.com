@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "product", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "category_id"}))
 @Getter
@@ -20,12 +22,22 @@ public final class ProductAggregateRoot {
   @Column(name = "category_id", nullable = false)
   private long categoryId;
 
+  @Column(name = "sku", nullable = false, unique = true, length = 50, updatable = false)
+  private String sku;
+
   @Column(name = "name", nullable = false)
   private String name;
   @Column(name = "description", nullable = false)
   private String description;
 
-  @Column(name = "price", nullable = false)
-  private double price;
+  @Column(name = "price", nullable = false, precision = 19, scale = 2)
+  private BigDecimal price;
+
+  @Column(name = "active", nullable = false)
+  private boolean active;
+
+  public void desactivate() {
+    this.active = false;
+  }
 }
 

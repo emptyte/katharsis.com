@@ -5,18 +5,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "stock", uniqueConstraints = {@UniqueConstraint(columnNames = {"product_id", "branch_id"})})
 @Getter
 @NoArgsConstructor
 @ToString
-public final class StockAggregateRoot {
+public class StockAggregateRoot {
   @Version
   private long version;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private long id;
 
   @Column(name = "product_id", nullable = false)
   private long productId;
@@ -35,31 +37,36 @@ public final class StockAggregateRoot {
   @Column(name = "max_stock", nullable = false)
   private int maxStock;
 
+  @Column(name = "last_update", nullable = false)
+  private LocalDateTime lastUpdate;
+
   public void addStock(final int amount) {
     if (amount <= 0) {
-      throw new IllegalArgumentException("amount must be positive");
+      throw new IllegalArgumentException("Amount must be positive");
     }
-    if (this.quantity > this.maxStock) {
-      throw new IllegalArgumentException("stock is over max stock");
+    if (this.quantity + amount > this.maxStock) {
+      throw new IllegalArgumentException("Stock would exceed max limit of " + this.maxStock);
     }
     this.quantity += amount;
+    this.lastUpdate = LocalDateTime.now();
   }
 
   public void removeStock(final int amount) {
     if (amount <= 0) {
-      throw new IllegalArgumentException("amount must be positive");
+      throw new IllegalArgumentException("Amount must be positive");
     }
     if (this.quantity < amount) {
-      throw new IllegalArgumentException("stock is not enough");
+      throw new IllegalArgumentException("Insufficient stock. Current: " + this.quantity);
     }
     this.quantity -= amount;
+    this.lastUpdate = LocalDateTime.now();
   }
 
   public int getAvailableStock() {
-    return this.quantity - this.soldQuantity;
+    return this.quantity - this.reservedQuantity;
   }
 
   public boolean getBelowThreshold() {
-    return this.quantity < this.minStockThreshold;
+    return this.getAvailableStock() < this.minStockThreshold;
   }
 }
