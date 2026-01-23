@@ -9,6 +9,7 @@ import team.emptyte.katharsis.catalog.category.application.contract.command.Cate
 import team.emptyte.katharsis.catalog.category.application.contract.view.CategoryView;
 import team.emptyte.katharsis.catalog.category.application.mapper.CategoryMapper;
 
+import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -21,6 +22,11 @@ public final class CategoryController {
   @GetMapping("/{id}")
   public CompletableFuture<CategoryView> get(final @PathVariable Long id) {
     return this.categoryService.findById(id);
+  }
+
+  @GetMapping
+  public CompletableFuture<Collection<CategoryView>> getAll() {
+    return this.categoryService.findAll();
   }
 
   @PostMapping
