@@ -100,7 +100,7 @@ function NavItem({ isExpanded = false, onToggle, navItem }: NavItemProps) {
                     text-[13px] transition-colors duration-200 rounded-md
                     group/sub
                     ${isSubActive
-                      ? "text-theme-primary bg-theme-primary/5 font-medium"
+                      ? "text-theme-primary bg-theme-primary/5"
                       : "text-theme-secondary-light hover:text-theme-primary hover:bg-white/5"
                     }
                   `}
