@@ -16,6 +16,7 @@ function NavItem({ isExpanded = false, onToggle, navItem }: NavItemProps) {
   const isExactActive = pathname === navItem.href;
   const isChildActive = navItem.subItems?.some((sub) => pathname === sub.href);
   const isActive = isExactActive || isChildActive;
+  const isClosedAndActive = isActive && !isExpanded;
 
   const handleClick = (e: React.MouseEvent) => {
     if (navItem.subItems) {
@@ -27,14 +28,14 @@ function NavItem({ isExpanded = false, onToggle, navItem }: NavItemProps) {
   const containerClasses = `
     relative w-full flex items-center justify-between px-3 py-2.5 
     cursor-pointer rounded-lg transition-all duration-300 ease-out select-none
-
-    ${isActive && !isExpanded
-      ? "bg-theme-surface-light/30 text-theme-primary border border-theme-primary/10"
-      : `
-         group-hover/item:bg-white/5 
-         group-hover/item:text-theme-primary
-         ${isExpanded ? "text-theme-primary" : "text-theme-secondary-light"} 
-        `
+    border
+    ${isClosedAndActive
+      ? "bg-theme-surface-light/30 border-theme-primary/10"
+      : "bg-transparent border-transparent group-hover/item:bg-white/5"
+    }
+    ${isActive || isExpanded 
+      ? "text-theme-primary" 
+      : "text-theme-secondary-light group-hover/item:text-theme-primary"
     }
   `;
 
@@ -112,7 +113,7 @@ function NavItem({ isExpanded = false, onToggle, navItem }: NavItemProps) {
                       className={`
                         size-1.5 rounded-full transition-colors
                         ${isSubActive ?
-                          "bg-theme-primary shadow-[0_0_8px_rgba(var(--theme-primary-rgb),0.5)]" :
+                          "bg-theme-primary" :
                           "bg-theme-secondary-light/40 group-hover/sub:bg-theme-secondary-light"
                         }
                       `}

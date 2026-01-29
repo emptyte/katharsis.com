@@ -34,15 +34,26 @@ function Sidebar({ role, user, currentBranch }: SidebarProps) {
   const isAdmin = role === "admin";
   const navigationConfig = isAdmin ? adminNavigationConfig : operatorNavigationConfig;
 
-  const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const findActiveItem = (config: any[], currentPath: string): string | null => {
+    for (const section of config) {
+      for (const item of section.items) {
+        if (item.subItems?.some((sub: any) => currentPath.startsWith(sub.href))) {
+          return item.name;
+        }
+      }
+    }
+    return null;
+  };
+
+  const [expandedItem, setExpandedItem] = useState<string | null>(() => {
+    return findActiveItem(navigationConfig, pathname);
+  });
 
   useEffect(() => {
-    navigationConfig.forEach(section => {
-      section.items.forEach(item => {
-        if (item.subItems?.some(sub => pathname.startsWith(sub.href))) {
-          setExpandedItem(item.name);
-        }
-      });
+    const activeItem = findActiveItem(navigationConfig, pathname);
+    setExpandedItem((prev) => {
+      if (prev !== activeItem) return activeItem;
+      return prev;
     });
   }, [pathname, navigationConfig]);
 
@@ -57,9 +68,10 @@ function Sidebar({ role, user, currentBranch }: SidebarProps) {
       <div className="h-22 flex items-center px-4">
         {isAdmin ? (
           <InfoCard
-            title={user.name}
-            subtitle={user.email}
-            imageSrc={user.avatarUrl}
+            title={user?.name || "Unknown Branch"}
+            subtitle={user?.email || "Location"}
+            Icon={Square3Stack3DIcon}
+            variant="primary"
             isDropdown
           />
         ) : (
