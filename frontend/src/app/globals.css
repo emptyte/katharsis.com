@@ -4,33 +4,27 @@
   --font-main: "Plus Jakarta Display", Helvetica, Arial, sans-serif;
   --font-special: "Roobert", sans-serif;
 
-  --color-theme-obsidian: #161616;
-  --color-theme-charcoal: #262626;
-  --color-theme-iron: #404040;
-  --color-theme-mist: #525252;
-  --color-theme-electric-blue: #3B82F6;
-  --color-theme-emerald: #34D399;
-  --color-theme-amber: #FBBF24;
-  --color-theme-red: #F87171;
+  --color-theme-primary: #2563EB;
+  --color-theme-background-light: #F3F4F6;
+  --color-theme-surface-light: #FFFFFF;
+  --color-theme-primary-light: #111827;
+  --color-theme-secondary-light: #6B7280;
 }
 
 @theme inline {
   --font-main: var(--font-main);
   --font-special: var(--font-special);
 
-  --color-theme-obsidian: var(--color-theme-obsidian);
-  --color-theme-charcoal: var(--color-theme-charcoal);
-  --color-theme-iron: var(--color-theme-iron);
-  --color-theme-mist: var(--color-theme-mist);
-  --color-theme-electric-blue: var(--color-theme-electric-blue);
-  --color-theme-emerald: var(--color-theme-emerald);
-  --color-theme-amber: var(--color-theme-amber);
-  --color-theme-red: var(--color-theme-red);
+  --color-theme-primary: var(--color-theme-primary);
+  --color-theme-background-light: var(--color-theme-background-light);
+  --color-theme-surface-light: var(--color-theme-surface-light);
+  --color-theme-primary-light: var(--color-theme-primary-light);
+  --color-theme-secondary-light: var(--color-theme-secondary-light);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    background: var(--color-theme-gunmetal);
+    background: var(--color-theme-background-light);
     font-family: var(--font-main);
   }
 }
@@ -68,7 +62,7 @@
 }
 
 body {
-  background: var(--color-theme-obsidian);
-  color: var(--color-theme-mist);
+  background: var(--color-theme-background-light);
+  color: var(--color-theme-primary-light);
   font-family: var(--font-main);
 }
