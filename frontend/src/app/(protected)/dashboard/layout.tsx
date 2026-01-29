@@ -1,3 +1,4 @@
+import Navbar from "./components/navbar/navbar";
 import Sidebar from "./components/navigation/sidebar/sidebar";
 import type { Metadata } from "next";
 
@@ -13,7 +14,7 @@ export default function DashboardLayout({
 }) {
   return (
     <section className="flex h-screen w-full overflow-hidden">
-      <aside className="h-full w-52 shrink-0">
+      <aside className="h-full w-72 shrink-0">
         <Sidebar
           role="admin"
           user={{
@@ -28,8 +29,13 @@ export default function DashboardLayout({
         />
       </aside>
 
-      <main className="flex-1 h-full overflow-y-auto p-4 rounded-tl-2xl">
-        {children}
+      <main className="flex-1 h-full relative p-8">
+        <header className="sticky top-0 z-10">
+          <Navbar />
+        </header>
+        <div className="h-full w-full rounded-l-3xl overflow-y-auto overflow-x-hidden py-4">
+          {children}
+        </div>
       </main>
     </section>
   );
