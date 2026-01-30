@@ -29,7 +29,7 @@ export default function DashboardLayout({
         />
       </aside>
 
-      <main className="flex-1 h-full relative p-8">
+      <main className="flex-1 h-full relative px-8 py-6.5">
         <header className="sticky top-0 z-10">
           <Navbar />
         </header>
