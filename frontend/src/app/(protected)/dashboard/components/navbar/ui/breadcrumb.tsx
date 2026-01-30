@@ -42,24 +42,40 @@ function Breadcrumb() {
         {visibleSegments.map((segment, index) => {
           const realIndex = allSegments.indexOf(segment);
           const href = paths[realIndex];
+
+          const isFirst = index === 0;
           const isLast = index === visibleSegments.length - 1;
 
           return (
             <React.Fragment key={segment}>
               <span className="text-theme-secondary-light/60 select-none">/</span>
 
-              <Link
-                href={href}
-                className={`capitalize font-medium transition-colors truncate max-w-40 ${isLast ? 'text-theme-secondary-light' : 'text-theme-secondary-light/50'}`}
-              >
-                {format(segment)}
-              </Link>
+              {isFirst || isLast ? (
+                <span
+                  className={`
+                    capitalize truncate max-w-40 select-none
+                    ${isLast 
+                      ? 'text-theme-secondary-light font-medium'
+                      : 'text-theme-secondary-light/50'
+                    }
+                  `}
+                >
+                  {format(segment)}
+                </span>
+              ) : (
+                <Link
+                  href={href}
+                  className="capitalize transition-colors truncate max-w-40 text-theme-secondary-light/60 hover:text-theme-primary hover:underline decoration-theme-primary/30 underline-offset-4"
+                >
+                  {format(segment)}
+                </Link>
+              )}
             </React.Fragment>
           );
         })}
       </nav>
 
-      <h1 className="text-[17px] font-special font-semibold text-theme-black">
+      <h1 className="text-[17px] font-special font-semibold text-theme-secondary-light">
         {visibleSegments.length === 0
           ? 'Dashboard'
           : format(visibleSegments[visibleSegments.length - 1])}
