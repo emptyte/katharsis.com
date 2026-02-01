@@ -10,7 +10,7 @@ type NavItemProps = {
   navItem: NavItem;
 };
 
-function NavItem({ isExpanded = false, onToggle, navItem }: NavItemProps) {
+function SidebarItem({ isExpanded = false, onToggle, navItem }: NavItemProps) {
   const pathname = usePathname();
 
   const isExactActive = pathname === navItem.href;
@@ -131,4 +131,4 @@ function NavItem({ isExpanded = false, onToggle, navItem }: NavItemProps) {
   );
 }
 
-export default NavItem;
+export default SidebarItem;

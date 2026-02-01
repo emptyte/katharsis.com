@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
-function InfoCard({
+function SidebarProfile({
   title,
   subtitle,
   imageSrc,
@@ -55,4 +55,4 @@ function InfoCard({
   );
 };
 
-export default InfoCard;
+export default SidebarProfile;
