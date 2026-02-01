@@ -1,4 +1,4 @@
-import Navbar from "./components/navbar/navbar";
+import Navbar from "./components/navigation/navbar/navbar";
 import Sidebar from "./components/navigation/sidebar/sidebar";
 import type { Metadata } from "next";
 
