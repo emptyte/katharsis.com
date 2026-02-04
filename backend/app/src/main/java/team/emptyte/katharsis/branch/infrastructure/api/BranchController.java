@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/api/v1/branches")
 @RequiredArgsConstructor
 @Tag(name = "Category API")
 public final class BranchController {
