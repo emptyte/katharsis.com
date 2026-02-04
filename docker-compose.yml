@@ -21,11 +21,32 @@ services:
       start_period: 30s
       timeout: 10s
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.5.2
+    command: start-dev
+    container_name: '${PROJECT_NAME?Variable not set}-keycloak'
+    ports:
+      - 8081:8080
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - katharsis-net
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KC_HOSTNAME_STRICT: "false"
+      KC_HTTP_ENABLED: "true"
+
   backend:
     container_name: '${PROJECT_NAME?Variable not set}-backend'
     build:
       context: ./backend
-      target: dev
+      target: development
     dns:
       - 8.8.8.8
     ports:
@@ -34,14 +55,17 @@ services:
       db:
         condition: service_healthy
         restart: true
+      keycloak:
+        condition: service_started
+        restart: true
+    networks:
+      - katharsis-net
     environment:
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO}
       - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT}
-    networks:
-      - katharsis-net
     develop:
       watch:
         - path: ./backend
